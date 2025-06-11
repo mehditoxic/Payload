@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تولیدکننده پیشرفته پی‌لود Digispark</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-microchip"></i> تولیدکننده پیشرفته پی‌لود Digispark</h1>
+        <p>با استفاده از این ابزار، پی‌لودهای سفارشی برای Digispark خود ایجاد کنید.</p>
+
+        <div class="card">
+            <h2><i class="fas fa-cogs"></i> تنظیمات کلی</h2>
+            <div class="form-group">
+                <label for="osSelect">سیستم عامل هدف:</label>
+                <select id="osSelect">
+                    <option value="windows">ویندوز</option>
+                    <option value="mac">مک‌اواس</option>
+                    <option value="linux">لینوکس</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="initialDelay">تاخیر اولیه (میلی‌ثانیه):</label>
+                <input type="number" id="initialDelay" value="1000" min="0">
+                <small>قبل از شروع پی‌لود، این مقدار صبر می‌کند.</small>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-terminal"></i> عملیات‌ها</h2>
+            <div id="payloadActions">
+                </div>
+            <button class="add-action-btn" onclick="addAction()"><i class="fas fa-plus"></i> افزودن عملیات جدید</button>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-code"></i> پیش‌نمایش کد Digispark</h2>
+            <textarea id="outputCode" rows="20" readonly></textarea>
+            <button class="copy-btn" onclick="copyCode()"><i class="fas fa-copy"></i> کپی کد</button>
+            <button class="download-btn" onclick="downloadCode()"><i class="fas fa-download"></i> دانلود .ino</button>
+        </div>
+
+        <div class="card">
+            <h2><i class="fas fa-save"></i> ذخیره/بارگذاری</h2>
+            <button class="save-btn" onclick="saveConfig()"><i class="fas fa-save"></i> ذخیره تنظیمات</button>
+            <button class="load-btn" onclick="loadConfig()"><i class="fas fa-folder-open"></i> بارگذاری تنظیمات</button>
+            <small>تنظیمات در مرورگر شما ذخیره می‌شوند.</small>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
