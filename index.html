@@ -1,56 +1,161 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تولیدکننده پیشرفته پی‌لود Digispark</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <title>Payload Forge | Advanced Generator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <div class="container">
-        <h1><i class="fas fa-microchip"></i> تولیدکننده پیشرفته پی‌لود Digispark</h1>
-        <p>با استفاده از این ابزار، پی‌لودهای سفارشی برای Digispark خود ایجاد کنید.</p>
+        <h1 class="glitch" data-text="PAYLOAD FORGE"><i class="fas fa-terminal"></i> PAYLOAD FORGE</h1>
+        <p class="subtitle">Crafting digital tools for the digital realm.</p>
 
-        <div class="card">
-            <h2><i class="fas fa-cogs"></i> تنظیمات کلی</h2>
-            <div class="form-group">
-                <label for="osSelect">سیستم عامل هدف:</label>
-                <select id="osSelect">
-                    <option value="windows">ویندوز</option>
-                    <option value="mac">مک‌اواس</option>
-                    <option value="linux">لینوکس</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="initialDelay">تاخیر اولیه (میلی‌ثانیه):</label>
-                <input type="number" id="initialDelay" value="1000" min="0">
-                <small>قبل از شروع پی‌لود، این مقدار صبر می‌کند.</small>
-            </div>
+        <div class="tab-container">
+            <button class="tab-button active" onclick="showTab('digispark')"><i class="fas fa-microchip"></i> Digispark Payloads</button>
+            <button class="tab-button" onclick="showTab('blueprints')"><i class="fas fa-hat-wizard"></i> Attack Blueprints</button>
         </div>
 
-        <div class="card">
-            <h2><i class="fas fa-terminal"></i> عملیات‌ها</h2>
-            <div id="payloadActions">
+        <div id="digispark" class="tab-content active">
+            <div class="card">
+                <h2><i class="fas fa-cogs"></i> Global Settings</h2>
+                <div class="form-group">
+                    <label for="osSelect">Target OS:</label>
+                    <select id="osSelect">
+                        <option value="windows">Windows</option>
+                        <option value="mac">macOS</option>
+                        <option value="linux">Linux</option>
+                    </select>
                 </div>
-            <button class="add-action-btn" onclick="addAction()"><i class="fas fa-plus"></i> افزودن عملیات جدید</button>
+                <div class="form-group">
+                    <label for="initialDelay">Initial Delay (ms):</label>
+                    <input type="number" id="initialDelay" value="1000" min="0">
+                    <small>Delay before the payload starts.</small>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2><i class="fas fa-code-branch"></i> Payload Actions</h2>
+                <div id="digisparkPayloadActions">
+                    </div>
+                <button class="add-action-btn" onclick="addDigisparkAction()"><i class="fas fa-plus"></i> Add New Action</button>
+            </div>
         </div>
 
-        <div class="card">
-            <h2><i class="fas fa-code"></i> پیش‌نمایش کد Digispark</h2>
+        <div id="android" class="tab-content" style="display:none;">
+             <div class="card">
+                <h2><i class="fas fa-mobile-alt"></i> Android Payload Settings</h2>
+                <div class="form-group">
+                    <label for="androidPayloadType">Payload Type:</label>
+                    <select id="androidPayloadType" onchange="updateAndroidPayloadFields()">
+                        <option value="adb_command">ADB Command</option>
+                        <option value="termux_script">Termux Script</option>
+                        <option value="social_engineering">Social Engineering Prompt</option>
+                    </select>
+                </div>
+                <div id="androidPayloadFields">
+                    </div>
+                 <small>Note: ADB commands require ADB enabled and authorized on the device. Termux scripts require Termux app installed.</small>
+             </div>
+        </div>
+
+        <div id="blueprints" class="tab-content">
+            <div class="card">
+                <h2><i class="fas fa-scroll"></i> Attack Blueprints</h2>
+                <div class="form-group">
+                    <label for="blueprintSelect">Choose a Blueprint:</label>
+                    <select id="blueprintSelect" onchange="loadBlueprint()">
+                        <option value="">-- Select a Blueprint --</option>
+                        <optgroup label="Data Exfiltration (سرقت اطلاعات)">
+                            <option value="digi_wifi_password_stealer_windows">Wi-Fi Password Stealer (Windows)</option>
+                            <option value="digi_screenshot_exfil_windows">Screenshot & Exfil (Windows)</option>
+                            <option value="digi_data_exfil_usb_windows">Data Exfil to USB (Windows)</option>
+                            <option value="digi_ssh_key_grab_linux">SSH Key Grab (Linux)</option>
+                            <option value="digi_browser_history_grab_windows">Browser History Grab (Windows)</option>
+                            <option value="digi_grab_passwords_mac">Keychain Password Grab (macOS)</option>
+                            <option value="digi_aws_credentials_windows">AWS Credentials Grab (Windows)</option>
+                            <option value="digi_chrome_passwords_windows">Chrome Passwords Grab (Windows)</option>
+                        </optgroup>
+                        <optgroup label="Persistence & Backdoor (پایداری و بک‌دور)">
+                            <option value="digi_reverse_shell_ps_windows">PowerShell Reverse Shell (Windows)</option>
+                            <option value="digi_persistent_backdoor_windows">Persistent Backdoor (Windows)</option>
+                            <option value="digi_add_ssh_key_mac_linux">Add SSH Key (macOS/Linux)</option>
+                            <option value="digi_sticky_keys_backdoor_windows">Sticky Keys Backdoor (Windows)</option>
+                        </optgroup>
+                        <optgroup label="Disruption & Sabotage (اختلال و خرابکاری)">
+                            <option value="digi_disable_defender_windows">Disable Defender (Windows)</option>
+                            <option value="digi_disable_network_mac">Disable Network (macOS)</option>
+                            <option value="digi_format_drive_windows">Format Drive (Windows - CAUTION!)</option>
+                            <option value="digi_shutdown_restart">Shutdown/Restart System (Windows/macOS/Linux)</option>
+                            <option value="digi_keyboard_spam">Keyboard Spam (Cross-OS)</option>
+                            <option value="digi_num_caps_lock_toggle">Num/CapsLock Toggle (Cross-OS)</option>
+                        </optgroup>
+                         <optgroup label="Prank Attacks (حملات شوخی)">
+                            <option value="digi_rick_roll">Rickroll (Cross-OS)</option>
+                            <option value="digi_open_many_notepad_windows">Open Many Notepads (Windows)</option>
+                            <option value="digi_fake_error_message_windows">Fake Error Message (Windows)</option>
+                            <option value="digi_open_cmd_on_startup_windows">CMD on Startup (Windows)</option>
+                            <option value="digi_mouse_freakout">Mouse Freakout (Cross-OS)</option>
+                            <option value="digi_capslock_spam_permanent">CapsLock Spam (Cross-OS)</option>
+                        </optgroup>
+                         <optgroup label="Information Gathering (جمع‌آوری اطلاعات)">
+                            <option value="digi_system_info_grab_windows">System Info Grab (Windows)</option>
+                            <option value="digi_system_info_grab_linux">System Info Grab (Linux)</option>
+                            <option value="digi_list_files_directories_windows">List Files/Dirs (Windows)</option>
+                            <option value="digi_installed_programs_windows">Installed Programs (Windows)</option>
+                            <option value="digi_network_config_grab_windows">Network Config Grab (Windows)</option>
+                            <option value="digi_mac_system_info_grab_mac">macOS System Info Grab (macOS)</option>
+                        </optgroup>
+                        <optgroup label="Privilege Escalation (افزایش سطح دسترسی)">
+                            <option value="digi_bypass_uac_download_exec_windows">Bypass UAC & Download/Exec (Windows)</option>
+                        </optgroup>
+                        <optgroup label="User Account Manipulation (دستکاری حساب کاربری)">
+                            <option value="digi_add_user_windows">Add User (Windows)</option>
+                            <option value="digi_disable_user_windows">Disable User (Windows)</option>
+                            <option value="digi_linux_add_sudo_user">Add Sudo User (Linux)</option>
+                        </optgroup>
+                        <optgroup label="Network Manipulation (دستکاری شبکه)">
+                            <option value="digi_change_dns_windows">Change DNS (Windows)</option>
+                            <option value="digi_block_website_windows">Block Website (Windows)</option>
+                            <option value="digi_disable_firewall_windows">Disable Firewall (Windows)</option>
+                        </optgroup>
+                        <optgroup label="Browser & Application Attacks (حملات مرورگر و برنامه‌ها)">
+                            <option value="digi_open_website">Open Website (Cross-OS)</option>
+                            <option value="digi_force_browser_full_screen">Force Browser Full Screen (Cross-OS)</option>
+                            <option value="digi_open_task_manager_windows">Open Task Manager (Windows)</option>
+                            <option value="digi_open_dev_tools_browser">Open Dev Tools (Browser)</option>
+                        </optgroup>
+                    </select>
+                </div>
+                <div id="blueprintDescription" class="description-box">
+                    <p>Select a blueprint to see its description and generated payload.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card code-output-card">
+            <h2><i class="fas fa-code"></i> Generated Payload</h2>
             <textarea id="outputCode" rows="20" readonly></textarea>
-            <button class="copy-btn" onclick="copyCode()"><i class="fas fa-copy"></i> کپی کد</button>
-            <button class="download-btn" onclick="downloadCode()"><i class="fas fa-download"></i> دانلود .ino</button>
+            <div class="button-group">
+                <button class="copy-btn" onclick="copyCode()"><i class="fas fa-copy"></i> Copy Code</button>
+                <button class="download-btn" onclick="downloadCode()"><i class="fas fa-download"></i> Download .ino</button>
+            </div>
         </div>
 
         <div class="card">
-            <h2><i class="fas fa-save"></i> ذخیره/بارگذاری</h2>
-            <button class="save-btn" onclick="saveConfig()"><i class="fas fa-save"></i> ذخیره تنظیمات</button>
-            <button class="load-btn" onclick="loadConfig()"><i class="fas fa-folder-open"></i> بارگذاری تنظیمات</button>
-            <small>تنظیمات در مرورگر شما ذخیره می‌شوند.</small>
+            <h2><i class="fas fa-save"></i> Save/Load Configuration</h2>
+            <div class="button-group">
+                <button class="save-btn" onclick="saveConfig()"><i class="fas fa-save"></i> Save Config</button>
+                <button class="load-btn" onclick="loadConfig()"><i class="fas fa-folder-open"></i> Load Config</button>
+            </div>
+            <small>Configuration is saved in your browser's local storage.</small>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="js/commonUtils.js"></script>
+    <script src="js/digisparkPayloads.js"></script>
+    <script src="js/androidPayloads.js"></script> <script src="js/script.js"></script>
 </body>
 </html>
