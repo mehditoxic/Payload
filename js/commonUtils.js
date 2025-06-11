@@ -107,9 +107,9 @@ function saveConfig() {
                 case 'mouse_scroll':
                     value = parseInt(actionItem.querySelector(`#${actionId}-mouse-scroll`).value);
                     break;
-                case 'consumer_control':
-                    value = actionItem.querySelector(`#${actionId}-consumer`).value;
-                    break;
+           //     case 'consumer_control':
+              //      value = actionItem.querySelector(`#${actionId}-consumer`).value;
+              //      break;
                 case 'run_dialog':
                     value = actionItem.querySelector(`#${actionId}-command`).value;
                     break;

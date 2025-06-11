@@ -152,7 +152,7 @@ function updateDigisparkActionFields(actionId, initialType = null, initialValue 
                 <small>Positive for up, negative for down.</small>
             `;
             break;
-        case 'consumer_control':
+     /*  case 'consumer_control':
             valueHtml = `
                 <label for="${actionId}-consumer">Consumer Control:</label>
                 <select id="${actionId}-consumer">
@@ -163,7 +163,7 @@ function updateDigisparkActionFields(actionId, initialType = null, initialValue 
                     <option value="MEDIA_NEXT" ${initialValue === 'MEDIA_NEXT' ? 'selected' : ''}>Next Track</option>
                     <option value="MEDIA_PREVIOUS" ${initialValue === 'MEDIA_PREVIOUS' ? 'selected' : ''}>Previous Track</option>
                 </select>
-            `;
+            `;*/
             break;
         case 'run_dialog':
             valueHtml = `
