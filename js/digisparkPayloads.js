@@ -54,7 +54,7 @@ function addDigisparkAction(actionType = 'keyboard', value = '', delay = 100) {
                     <option value="mouse_move" ${actionType === 'mouse_move' ? 'selected' : ''}>Mouse (Move)</option>
                     <option value="mouse_click" ${actionType === 'mouse_click' ? 'selected' : ''}>Mouse (Click)</option>
                     <option value="mouse_scroll" ${actionType === 'mouse_scroll' ? 'selected' : ''}>Mouse (Scroll)</option>
-                    <option value="consumer_control" ${actionType === 'consumer_control' ? 'selected' : ''}>Consumer Control (Vol/Media)</option>
+                   <!-- <option value="consumer_control" ${actionType === 'consumer_control' ? 'selected' : ''}>Consumer Control (Vol/Media)</option> -->
                     <option value="run_dialog" ${actionType === 'run_dialog' ? 'selected' : ''}>Execute Command (Run Dialog)</option>
                     <option value="delay" ${actionType === 'delay' ? 'selected' : ''}>Delay (Custom Ms)</option>
                     <option value="comment" ${actionType === 'comment' ? 'selected' : ''}>Comment (Code Annotation)</option>
@@ -269,10 +269,10 @@ function generateDigisparkCode() {
                 const mouseScroll = parseInt(actionItem.querySelector(`#${actionId}-mouse-scroll`).value);
                 code += `  DigiKeyboard.scroll(${mouseScroll});\n`;
                 break;
-            case 'consumer_control':
-                const consumerAction = actionItem.querySelector(`#${actionId}-consumer`).value;
-                code += `  DigiKeyboard.sendKeyStroke(${consumerAction});\n`;
-                break;
+          //  case 'consumer_control':
+              //  const consumerAction = actionItem.querySelector(`#${actionId}-consumer`).value;
+               // code += `  DigiKeyboard.sendKeyStroke(${consumerAction});\n`;
+              //  break;
             case 'run_dialog':
                 const command = actionItem.querySelector(`#${actionId}-command`).value;
                 if (command) {
